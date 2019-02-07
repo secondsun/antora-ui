@@ -29,7 +29,7 @@ gulp.task('format', () => format(jsFiles))
 
 gulp.task('build', () => build(srcDir, destDir))
 
-gulp.task('build:preview', ['build'], () =>
+gulp.task('build:preview', ['pack'], () =>
   buildPreview(srcDir, destDir, previewSiteSrcDir, previewSiteDestDir, connect.reload)
 )
 

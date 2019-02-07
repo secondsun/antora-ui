@@ -21,7 +21,19 @@ module.exports = async (src, dest, siteSrc, siteDest, sink) => {
     .src('**/*.html', { base: siteSrc, cwd: siteSrc })
     .pipe(
       map((file, next) => {
-        const compiledLayout = layouts[file.stem === '404' ? '404.hbs' : 'default.hbs']
+        let compiledLayout
+        switch (file.stem) {
+          case '404':
+            compiledLayout = layouts['404.hbs']
+            break
+          case 'overview':
+            compiledLayout = layouts['overview.hbs']
+            break
+          default:
+            compiledLayout = layouts['default.hbs']
+            break
+        }
+
         const siteRootPath = path.relative(path.dirname(file.path), path.resolve(siteSrc))
         uiModel.siteRootPath = siteRootPath
         uiModel.siteRootUrl = path.join(siteRootPath, 'index.html')
